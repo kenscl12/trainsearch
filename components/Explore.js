@@ -10,7 +10,6 @@ var errors = {
 export default class Explore extends Component {
   constructor(props) {
     super(props)
-    this.handleKeyUp = this.handleKeyUp.bind(this)
 	this.handleGoClick = this.handleGoClick.bind(this)
   }
   
@@ -40,27 +39,29 @@ export default class Explore extends Component {
 	return true;
   }
   
-  handleKeyUp(e) {
-    if (e.keyCode === 13) {
-      this.handleGoClick()
-    }
-  }
-  
   getInputValue() {
-	return {
-	  fromStation: this.refs.fromStation.value,
-      toStation: this.refs.toStation.value
+	  
+	if(this.validateForm()){
+      return {
+	    fromStation: this.refs.fromStation.value,
+        toStation: this.refs.toStation.value
+	  }
+	} else {
+	  return {
+		fromStation: this.props.values.fromStation,
+        toStation: this.props.values.toStation
+	  }
 	}
+	  
+	
 	
 	
   }
 
   handleGoClick() {
-	if(this.validateForm()){
+	
       this.props.onChange(this.getInputValue())
-	} else {
-	  return false;
-	}
+	
   }
 
   render() {
